@@ -1,6 +1,6 @@
 # legend 传奇
 
-`Legend` is a very interesting project where you can input your date of birth and province/state, and it will calculate your virtual but reasonable remaining lifetime in days, hours, minutes, and seconds.
+`Legend` is a very interesting project where you can input your date of birth and province/state, and it will calculate your virtual but reasonable remaining lifetime in days, hours, minutes, and seconds.  
 `传说`是一个非常有趣的项目，您可以输入您的出生日期和省份/州，它会计算您的虚拟但合理的剩余寿命，以天、小时、分钟和秒为单位。
 
 ## High-Priority TO-DO 
