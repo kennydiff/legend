@@ -4,19 +4,40 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:yaml/yaml.dart';
+import 'dart:math';
+
+class Person {
+    final String name;
+    final int birthYear;
+    late final int randomNumber;
+
+    Person(this.name, this.birthYear) {
+        randomNumber = _generateRandomNumber();
+    }
+
+    int _generateRandomNumber() {
+        final random = Random();
+        return random.nextInt(63072000); // 生成 0 到 63072000 之间的随机数
+    }
+
+    @override
+    String toString() {
+        return 'Person(name: $name, birthYear: $birthYear, randomNumber: $randomNumber)';
+    }
+}
+
+late Person person;
 
 void main() {
-    runApp(MyApp());
-
     final file = File('config.yaml');
 
     // 如果文件不存在，则创建并初始化配置
     if (!file.existsSync()) {
-        // K_23704 final
+        // K_24814 配置去掉月份信息，尽量减少隐私信息的泄露
         const config = '''
 apiKey: your-api-key
 username: your-username
-birth_year_month: 197702
+birth_year: 1989
 randomseed_sec: 4929394
     ''';
 
@@ -31,8 +52,14 @@ randomseed_sec: 4929394
     // 使用配置信息
     print('API Key: ${config['apiKey']}');
     print('Username: ${config['username']}');
-    print('birth_year_month: ${config['birth_year_month']}');
+    print('birth_year: ${config['birth_year']}');
     print('randomseed_sec: ${config['randomseed_sec']}');
+    print('randomseed_sec: ${config['randomseed_sec']}');
+
+    person = Person(config['username'], config['birth_year']);
+    print(person);
+
+    runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -65,7 +92,7 @@ class _CountdownPageState extends State<CountdownPage> {
     @override
     void initState() {
         super.initState();
-        _days = 10402; // 设置初始小时数  1977.02.12   ...   2051.31   ...   28.5 =
+        _days = 10402; // 设置初始小时数  1977.02.01   ...   2051.31   ...   28.5 =
         _hours = 12;
         startCountdown();
     }
@@ -131,7 +158,7 @@ class _CountdownPageState extends State<CountdownPage> {
                         Padding(
                             padding: EdgeInsets.symmetric(horizontal: 64),
                             child: Text(
-                                '*** ，你是独一无二的。你的所有特点，你所做的每一个选择定义了你，享受这个美丽的世界，像闪亮的流星划过星空。。。',
+                                '${person.name}，你是独一无二的。你的所有特点，你所做的每一个选择定义了你，享受这个美丽的世界，像闪亮的流星划过星空。。。',
                                 style: TextStyle(fontSize: 32),
                             ),
                         ),
