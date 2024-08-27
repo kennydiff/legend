@@ -1,5 +1,8 @@
 apiKey: your-api-key
-username: Jessica
-birth_year: 1989
+username: Kenny
+birth_year: 1977
 randomseed_sec: 4929394
+last_modified_date:
+# K_24827 tell_me 有280个英文字符/140个中文字符的约束
+tell_me: '你是独一无二的。你的所有特点，你所做的每一个选择定义了你，享受这个美丽的世界，像闪亮的流星划过星空。。。'
 

@@ -34,14 +34,14 @@ void main() {
     // 如果文件不存在，则创建并初始化配置
     if (!file.existsSync()) {
         // K_24814 配置去掉月份信息，尽量减少隐私信息的泄露
-        const config = '''
+        const config_str = '''
 apiKey: your-api-key
 username: your-username
 birth_year: 1989
 randomseed_sec: 4929394
     ''';
 
-        file.writeAsStringSync(config);
+        file.writeAsStringSync(config_str);
         print('配置已初始化！');
     }
 
@@ -54,7 +54,11 @@ randomseed_sec: 4929394
     print('Username: ${config['username']}');
     print('birth_year: ${config['birth_year']}');
     print('randomseed_sec: ${config['randomseed_sec']}');
-    print('randomseed_sec: ${config['randomseed_sec']}');
+
+    final random = Random();
+    int randomInt = random.nextInt(63072001);
+    // 修改 randomseed_sec 的值
+    config['randomseed_sec'] = randomInt; // 这里设置为你想要的新值
 
     person = Person(config['username'], config['birth_year']);
     print(person);
