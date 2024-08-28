@@ -34,20 +34,23 @@ void main() {
     // 如果文件不存在，则创建并初始化配置
     if (!file.existsSync()) {
         // K_24814 配置去掉月份信息，尽量减少隐私信息的泄露
-        const config_str = '''
+        const confStr = '''
 apiKey: your-api-key
 username: your-username
 birth_year: 1989
 randomseed_sec: 4929394
     ''';
 
-        file.writeAsStringSync(config_str);
+        file.writeAsStringSync(confStr);
         print('配置已初始化！');
     }
 
     // 读取配置文件
     final contents = file.readAsStringSync();
     final config = loadYaml(contents);
+
+    // 将不可变的 Map 转换为可变的 Map
+    var mutableConfig = Map.from(config);
 
     // 使用配置信息
     print('API Key: ${config['apiKey']}');
@@ -58,7 +61,7 @@ randomseed_sec: 4929394
     final random = Random();
     int randomInt = random.nextInt(63072001);
     // 修改 randomseed_sec 的值
-    config['randomseed_sec'] = randomInt; // 这里设置为你想要的新值
+    mutableConfig['randomseed_sec'] = randomInt; // 这里设置为你想要的新值
 
     person = Person(config['username'], config['birth_year']);
     print(person);
@@ -85,7 +88,7 @@ class CountdownPage extends StatefulWidget {
 }
 
 // K_23703 平均年龄数据来源~> https:/zh.wikipedia.org/wiki/中华人民共和国各省级行政区预期寿命列表
-// K_23703 广西: 82.34(女)	74.31(男)  还要取一个 正负4年(365天*8的上下限,按秒随机)的随机数
+// K_23703 广西: 82.34(女)	74.31(男)  还要取一个 正负2年(365天*4的上下限,按秒随机)的随机数
 class _CountdownPageState extends State<CountdownPage> {
     late Timer _timer;
     int _days = 10402;
@@ -176,6 +179,29 @@ class _CountdownPageState extends State<CountdownPage> {
                             getFormattedTime().split('\n')[1],
                             style: TextStyle(fontSize: 48),
                         ),
+                        Spacer(),
+                        Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                    ElevatedButton(
+                                        onPressed: () {
+                                            print('Button 1 pressed');
+                                        },
+                                        child: Text('Button 1'),
+                                    ),
+                                    SizedBox(width: 20), // 添加水平间距
+                                    ElevatedButton(
+                                        onPressed: () {
+                                            print('Button 2 pressed');
+                                        },
+                                        child: Text('Button 2'),
+                                    ),
+                                ],
+                            ),
+                        ),
+                        Spacer(),
                     ],
                 ),
             ),
