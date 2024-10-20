@@ -1,6 +1,7 @@
-apiKey: your-api-key
-username: Kenny
+apiKey: 'your-api-key'
+username: 'Kenny'
 birth_year: 1977
+province: 'Guangxi'
 randomseed_sec: 4929394
 last_modified_date:
 # K_24827 tell_me 有280个英文字符/140个中文字符的约束
