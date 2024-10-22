@@ -29,10 +29,12 @@ class Person {
 late Person person;
 
 void main() {
-    final file = File('config.yaml');
-
+    // var x = 1 + 2;
+    // print(x);
+    final file = File('config.yaml'); // K_24A22 这一句无法断点，应该是flutter的缺陷
     // 如果文件不存在，则创建并初始化配置
     if (!file.existsSync()) {
+        // K_24A22 这一句开始可以设置断点了，好奇怪。
         // K_24814 配置去掉月份信息，尽量减少隐私信息的泄露
         const confStr = '''
 apiKey: your-api-key
